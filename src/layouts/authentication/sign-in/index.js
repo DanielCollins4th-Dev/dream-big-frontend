@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -40,11 +40,28 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { signin } from "actions/authActions";
+import { useEffect } from "react";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth)
+
+  const handleSignIn = () => {
+    dispatch(signin("danielcollinsdev@gmail.com", "awdrseft"))
+  }
+
+  useEffect(() => {
+    if(auth.isAuthenticated === true) {
+      console.log('--------')
+      window.location = "/dashboard"
+    }
+  }, [auth])
 
   return (
     <BasicLayout image={bgImage}>
@@ -102,7 +119,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" fullWidth onClick={() => handleSignIn()}>
                 sign in
               </MDButton>
             </MDBox>

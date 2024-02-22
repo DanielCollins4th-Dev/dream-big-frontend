@@ -43,6 +43,7 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import PageNotFound from 'layouts/page-not-found';
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -58,18 +59,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
+    name: "Matches",
+    key: "matches",
     icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
+    route: "/matches",
     component: <Tables />,
   },
   {
     type: "collapse",
-    name: "Billing",
-    key: "billing",
+    name: "Teams",
+    key: "teams",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
+    route: "/teams",
     component: <Billing />,
   },
   {
@@ -95,6 +96,7 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+    access: "all time"
   },
   {
     type: "collapse",
@@ -103,6 +105,15 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+    access: "all time"
+  },
+  {
+    type: "hidden",
+    name: "Page Not Found",
+    key: "page-not-found",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/page-not-found",
+    component: <PageNotFound />
   },
 ];
 

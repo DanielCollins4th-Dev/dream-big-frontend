@@ -45,12 +45,12 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import { useSelector } from "react-redux";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
     miniSidenav,
-    direction,
     layout,
     openConfigurator,
     sidenavColor,
@@ -60,6 +60,7 @@ export default function App() {
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
+  const auth = useSelector((state) => state.auth);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -80,11 +81,6 @@ export default function App() {
   // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
 
-  // Setting the dir attribute for the body element
-  useEffect(() => {
-    document.body.setAttribute("dir", direction);
-  }, [direction]);
-
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -97,11 +93,12 @@ export default function App() {
         return getRoutes(route.collapse);
       }
 
-      if (route.route) {
+      if (route.route && (auth.isAuthenticated || route.access)) {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
 
-      return null;
+      if (auth.isAuthenticated === false)
+        return <Route path="*" element={<Navigate to="authentication/sign-in"/>} key={"sign-in-before"}/>;
     });
 
   const configsButton = (
@@ -131,12 +128,12 @@ export default function App() {
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && (
+      {layout === "dashboard" && auth.isAuthenticated && (
         <>
           <Sidenav
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Material Dashboard 2"
+            brandName="Dream Big Earn Huge"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
@@ -148,7 +145,9 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        {
+          auth.isAuthenticated && <Route path="*" element={<Navigate to="page-not-found"/>} key={"page not found"}/>
+        }
       </Routes>
     </ThemeProvider>
   );

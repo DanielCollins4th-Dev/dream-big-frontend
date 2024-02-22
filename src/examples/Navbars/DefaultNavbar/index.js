@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
 
 // react-router components
@@ -51,7 +36,6 @@ function DefaultNavbar({ transparent, light, action }) {
   const closeMobileNavbar = () => setMobileNavbar(false);
 
   useEffect(() => {
-    // A function that sets the display state for the DefaultNavbarMobile.
     function displayMobileNavbar() {
       if (window.innerWidth < breakpoints.values.lg) {
         setMobileView(true);
@@ -61,17 +45,8 @@ function DefaultNavbar({ transparent, light, action }) {
         setMobileNavbar(false);
       }
     }
-
-    /** 
-     The event listener that's calling the displayMobileNavbar function when 
-     resizing the window.
-    */
     window.addEventListener("resize", displayMobileNavbar);
-
-    // Call the displayMobileNavbar function to set the state with the initial value.
     displayMobileNavbar();
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", displayMobileNavbar);
   }, []);
 
@@ -104,18 +79,15 @@ function DefaultNavbar({ transparent, light, action }) {
       >
         <MDBox
           component={Link}
-          to="/"
           py={transparent ? 1.5 : 0.75}
           lineHeight={1}
           pl={{ xs: 0, lg: 1 }}
         >
           <MDTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-            Material Dashboard 2
+            Dream Big - Earn Huge
           </MDTypography>
         </MDBox>
         <MDBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
-          <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
-          <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
           <DefaultNavbarLink
             icon="account_circle"
             name="sign up"
