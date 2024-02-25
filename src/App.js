@@ -93,12 +93,11 @@ export default function App() {
         return getRoutes(route.collapse);
       }
 
-      if (route.route && (auth.isAuthenticated || route.access)) {
+      else {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
 
-      if (auth.isAuthenticated === false)
-        return <Route path="*" element={<Navigate to="authentication/sign-in"/>} key={"sign-in-before"}/>;
+      return <Route path="*" element={<Navigate to="page-not-found" />} key={"page not found"} />
     });
 
   const configsButton = (
@@ -128,7 +127,7 @@ export default function App() {
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
-      {layout === "dashboard" && auth.isAuthenticated && (
+      {layout === "dashboard" && (
         <>
           <Sidenav
             color={sidenavColor}
@@ -145,9 +144,6 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        {
-          auth.isAuthenticated && <Route path="*" element={<Navigate to="page-not-found"/>} key={"page not found"}/>
-        }
       </Routes>
     </ThemeProvider>
   );
