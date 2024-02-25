@@ -43,8 +43,11 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { signin } from "actions/authActions";
 import { useEffect } from "react";
+import axios from "axios";
 
 function Basic() {
+  const [formData, setFormData] = useState({ email: '', password: '' })
+  const { email, password } = formData
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
@@ -52,16 +55,19 @@ function Basic() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth)
 
-  const handleSignIn = () => {
-    dispatch(signin("danielcollinsdev@gmail.com", "awdrseft"))
+  const handleSignIn = (e) => {
+    dispatch(signin(email, password))
+    e.preventDefault()
+    e.stopPropagation()
   }
 
-  useEffect(() => {
-    if(auth.isAuthenticated === true) {
-      console.log('--------')
-      window.location = "/dashboard"
-    }
-  }, [auth])
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  if (auth.isAuthenticated === true) {
+    window.location="/dashboard"
+  }
 
   return (
     <BasicLayout image={bgImage}>
@@ -101,10 +107,10 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" name="email" onChange={e => onChange(e)} fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" label="Password" name="password" onChange={e => onChange(e)} fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -119,7 +125,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth onClick={() => handleSignIn()}>
+              <MDButton variant="gradient" color="info" fullWidth onClick={(e) => handleSignIn(e)}>
                 sign in
               </MDButton>
             </MDBox>

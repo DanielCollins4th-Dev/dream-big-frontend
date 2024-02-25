@@ -1,22 +1,35 @@
-import { SIGN_IN_SUCCESS } from "../actions/types";
+import { SIGN_IN_SUCCESS, USER_LOADED, SIGN_IN_FAILED } from "../actions/types";
 
 const initialState = {
+  token: localStorage.getItem('token'),
   isAuthenticated: false,
-  name: "",
-  email: "",
-  picture: "",
+  user: null
 };
 
 export default function (state = initialState, action) {
-  switch (action.type) {
-    case SIGN_IN_SUCCESS:
+  const { type, payload } = action
+
+  switch (type) {
+    case USER_LOADED:
+      console.log(payload)
       return {
         ...state,
+				isAuthenticated: true,
+				user: payload
+      }
+    case SIGN_IN_SUCCESS:
+      localStorage.setItem('token', payload.token);
+      return {
+        ...state,
+        ...payload,
         isAuthenticated: true,
-        name: action.payload.name,
-        email: action.payload.email,
-        picture: action.payload.picture,
       };
+    case SIGN_IN_FAILED:
+      const { email, password } = payload;
+      return {
+        ...state,
+        isAuthenticated: false
+      }
     default:
       return state;
   }
