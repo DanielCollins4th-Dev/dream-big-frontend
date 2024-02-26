@@ -43,6 +43,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { signin } from "actions/authActions";
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 
 function Basic() {
@@ -53,6 +54,8 @@ function Basic() {
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const auth = useSelector((state) => state.auth)
 
   const handleSignIn = (e) => {
@@ -65,9 +68,11 @@ function Basic() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  if (auth.isAuthenticated === true) {
-    window.location="/dashboard"
-  }
+  useEffect(() => {
+    if (auth.isAuthenticated === true) {
+      navigate('/dashboard')
+    }
+  }, [auth])
 
   return (
     <BasicLayout image={bgImage}>

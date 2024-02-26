@@ -44,6 +44,7 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PageNotFound from 'layouts/page-not-found';
+import News from "layouts/news";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -56,6 +57,14 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "News",
+    key: "news",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/news",
+    component: <News />,
   },
   {
     type: "collapse",
@@ -75,6 +84,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Players",
+    key: "players",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/matches",
+    component: <Tables />,
+  },
+  {
+    type: "hidden",
     name: "Notifications",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
@@ -82,7 +99,7 @@ const routes = [
     component: <Notifications />,
   },
   {
-    type: "collapse",
+    type: "hidden",
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
@@ -90,7 +107,7 @@ const routes = [
     component: <Profile />,
   },
   {
-    type: "collapse",
+    type: "hidden",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -99,7 +116,7 @@ const routes = [
     access: "all time"
   },
   {
-    type: "collapse",
+    type: "hidden",
     name: "Sign Up",
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,

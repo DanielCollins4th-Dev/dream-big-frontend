@@ -4,11 +4,11 @@ import base_url from './config'
 import setAuthToken from "utils/setAuthToken";
 
 export const loadUser = () => async dispatch => {
-    if (localStorage.token) {
-        setAuthToken(localStorage.token);
-    }
+    // if (localStorage.token) {
+    //     setAuthToken(localStorage.token);
+    // }
 
-    try {
+    // try {
         const res = await axios.get(`${base_url}/users/current`, {
             headers: {Authorization: localStorage.token}
         });
@@ -16,11 +16,11 @@ export const loadUser = () => async dispatch => {
             type: USER_LOADED,
             payload: res.data
         });
-    } catch (err) {
-        dispatch({
+    // } catch (err) {
+        // dispatch({
             // type: AUTH_ERROR
-        });
-    }
+        // });
+    // }
 };
 
 export const signin = (email, password) => async dispatch => {

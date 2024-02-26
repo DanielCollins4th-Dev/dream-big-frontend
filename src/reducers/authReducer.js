@@ -11,13 +11,13 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case USER_LOADED:
-      console.log(payload)
       return {
         ...state,
 				isAuthenticated: true,
 				user: payload
       }
     case SIGN_IN_SUCCESS:
+      console.log('SIGN_IN_SUCCESS REDUCER')
       localStorage.setItem('token', payload.token);
       return {
         ...state,
